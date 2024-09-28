@@ -2,8 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+app.set('views', __dirname + '/views'); // Diretório onde as views estão
+
 app.get('/', (req, res) => {
-    res.send('Olá, mundo!');
+    res.render('index');
+});
+
+app.get('/comecar', (req, res) => {
+    res.render('comecar');
 });
 
 app.listen(3000, () => {
