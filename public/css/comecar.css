@@ -57,3 +57,10 @@
     height: auto; /* Mantém a proporção da imagem */
     max-height: 500px;
 }
+
+#dynamic-content {
+    width: 100%; /* Largura total */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    margin-top: 20px; /* Espaço acima */
+}
