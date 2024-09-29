@@ -41,8 +41,6 @@
 .texto {
     color: white; /* Cor do texto */
     flex: 1;
-    font-weight: bold; /* Texto em negrito */
-    font-size: 40px; /* Tamanho da fonte */
     margin-right: 20px; /* Espaço à direita para separar da imagem */
     text-align: center;
 }
@@ -62,5 +60,24 @@
     width: 100%; /* Largura total */
     padding: 20px; /* Espaçamento interno */
     border-radius: 10px; /* Bordas arredondadas */
-    margin-top: 20px; /* Espaço acima */
+}
+
+#titulo {
+    font-size: 40px; /* Tamanho da fonte */
+    font-weight: bold; /* Texto em negrito */ 
+}
+
+#explicação {
+    margin-top: 30px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+#btn_ {
+    font-size: 40px;
+    background-color: white;
+    color: #5EAB3C;
+    padding: 0px 10px 0px 10px;
+    text-decoration: none;
+    border-radius: 15px;
 }
