@@ -16,7 +16,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 5px;
-    background-color: #86c394;
+    background-color: #91CD76;
 }
 
 header nav ul {
@@ -27,6 +27,7 @@ header nav ul {
 
 header nav ul li {
     background-color: rgb(86, 143, 60, 0.50);
+    border-radius: 10px;
 }
 
 header nav ul li a {
@@ -44,9 +45,20 @@ header nav ul li a {
 
 #user {
     height: 70px;
+    padding-right: 10px;
 }
 
-.fa-headset{
+.fa-headset {
+    font-size: 30px;
+    margin: 5px;
+}
+
+.fa-dumbbell {
+    font-size: 30px;
+    margin: 5px;
+}
+
+.fa-bars {
     font-size: 30px;
     margin: 5px;
 }
