@@ -1,66 +1,59 @@
+#tabs {
+    margin: 30px 0px 20px 0px; /* Margem superior e inferior */
+    background-color: white;
+    padding: 20px 150px; /* Padding superior/inferior e lateral */
+    border-radius: 50px; /* Bordas arredondadas */
+}
 
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    background-color: #ffffff;
+#tabs ul {
+    display: flex; /* Flexbox para o layout horizontal */
+    list-style-type: none; /* Remove os marcadores da lista */
+    justify-content: center; /* Centraliza os itens */
+    gap: 70px; /* Espaço entre os itens */
+}
+
+#tabs ul li a {
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: #5EAB3C; /* Cor do texto */
+    font-weight: bold; /* Texto em negrito */
+    font-family: serif; /* Fonte serifada */
+    font-size: 30px; /* Tamanho da fonte */
+    margin: 5px; /* Margem ao redor dos links */
+}
+
+.container {
+    display: flex; /* Flexbox para o layout */
+    flex-direction: column;
+    padding: 20px;
+    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte se necessário */
+    background-color: #91CD76; /* Cor de fundo */
+    justify-content: center; /* Centraliza o conteúdo */
+    align-items: center; /* Alinha verticalmente o conteúdo */
+    margin: 100px; /* Margem em todos os lados */
 }
 
 .content {
     display: flex;
-    background-color: #b7e4c7;
-    padding: 30px;
-    border-radius: 15px;
-    max-width: 900px;
     justify-content: space-between;
     align-items: center;
 }
 
-.tabs ul {
-    list-style-type: none;
-    display: flex;
-    gap: 15px;
+.texto {
+    color: white; /* Cor do texto */
+    flex: 1;
+    font-weight: bold; /* Texto em negrito */
+    font-size: 40px; /* Tamanho da fonte */
+    margin-right: 20px; /* Espaço à direita para separar da imagem */
+    text-align: center;
 }
 
-.tabs ul li a {
-    text-decoration: none;
-    color: #ffffff;
-    background-color: #86c394;
-    padding: 10px 15px;
-    border-radius: 15px;
-    font-weight: bold;
+.imagem {
+    flex: 1; /* Permite que a imagem ocupe o espaço disponível */
+    max-width: 500px; /* Define uma largura máxima para a imagem */
 }
 
-.questionnaire {
-    max-width: 400px;
-}
-
-.questionnaire h2 {
-    font-size: 24px;
-    color: white;
-}
-
-.questionnaire p {
-    color: white;
-    margin: 15px 0;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: bold;
-    color: #86c394;
-}
-
-button:hover {
-    background-color: #d4f3dc;
-}
-
-.image img {
-    width: 200px;
-    border-radius: 15px;
+.imagem img {
+    width: 100%; /* Mantém a imagem responsiva */
+    height: auto; /* Mantém a proporção da imagem */
+    max-height: 500px;
 }

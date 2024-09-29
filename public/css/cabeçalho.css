@@ -11,12 +11,18 @@ body {
     background-color: #f0f0f0;
 }
 
+/* Adicione um fundo branco e z-index para o header fixo */
 header {
+    position: fixed; /* Mantém o header fixo no topo */
+    top: 0; /* Posiciona no topo */
+    left: 0; /* Alinha à esquerda */
+    right: 0; /* Alinha à direita */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 5px;
     background-color: #91CD76;
+    z-index: 1000; /* Garante que fique acima de outros elementos */
 }
 
 header nav ul {
@@ -26,7 +32,7 @@ header nav ul {
 }
 
 header nav ul li {
-    background-color: rgb(86, 143, 60, 0.50);
+    background-color: rgba(86, 143, 60, 0.50);
     border-radius: 10px;
 }
 
@@ -45,7 +51,7 @@ header nav ul li a {
 
 #user {
     height: 70px;
-    padding-right: 10px;
+    padding-right: 20px;
 }
 
 .fa-headset {
@@ -62,3 +68,4 @@ header nav ul li a {
     font-size: 30px;
     margin: 5px;
 }
+
