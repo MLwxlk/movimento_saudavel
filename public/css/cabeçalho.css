@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Mukta", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    background-color: #f0f0f0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background-color: #86c394;
+}
+
+header nav ul {
+    display: flex;
+    list-style-type: none;
+    gap: 70px;
+}
+
+header nav ul li {
+    background-color: rgb(86, 143, 60, 0.50);
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 5px;
+}
+
+#logo {
+    width: 200px;
+    height: 70px;
+}
+
+#user {
+    height: 70px;
+}
+
+.fa-headset{
+    font-size: 30px;
+    margin: 5px;
+}
