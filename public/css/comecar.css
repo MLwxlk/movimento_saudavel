@@ -81,3 +81,43 @@
     text-decoration: none;
     border-radius: 15px;
 }
+
+/* Tela de Agendamento */
+
+/* Tela de Exames */
+
+.exames {
+    background-color: white;
+    height: 400px;
+    width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+
+#if_noExames {
+    position:relative;
+    font-size: 20px;
+    top: 150px;
+    color: #5EAB3C
+}
+
+select {
+    margin-top: 10px ;
+    background-color: rgba(145, 205, 118, 0.5); /* Cor de fundo #91CD76 com 50% de transparência */
+    border: none; /* Remove a borda */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 10px; /* Padding interno para espaçar o conteúdo */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #fff; /* Cor do texto (branco) */
+    -webkit-appearance: none; /* Remove a aparência padrão do select em navegadores WebKit (Safari, Chrome) */
+    -moz-appearance: none; /* Remove a aparência padrão em navegadores Firefox */
+    appearance: none; /* Remove a aparência padrão do select */
+}
+
+select:focus {
+    outline: none; /* Remove a borda ao focar */
+    box-shadow: none; /* Remove qualquer sombra ao focar */
+}
+

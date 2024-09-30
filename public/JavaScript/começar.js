@@ -18,9 +18,14 @@ function loadContent(tabName) {
         `;
     } else if (tabName === 'exames') {
         dynamicContentDiv.innerHTML = `
-            <h2>Exames</h2>
-            <p>Aqui estão seus exames...</p>
-            <!-- Adicione mais conteúdo relevante aqui -->
+            <div class="exames">
+                    <select id="select">
+                        <option value="">Ordem alfabetica</option>
+                        <option value="">Data</option>
+                    </select>
+                    <p id="if_noExames">VOCÊ NÃO POSSUI EXAMES REALIZADOS</p>
+                </div>
+                <a id="btn_" href="#">MARCAR EXAME</a>
         `;
     } else if (tabName === 'metas') {
         dynamicContentDiv.innerHTML = `
