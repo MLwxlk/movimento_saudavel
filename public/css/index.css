@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+.container {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: #bbf5a0;
+}
+
+.img1 {
+    width: 25%;
+    background-image: url('/images/pessoa-img1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo h1 {
+    font-family: "Inria Serif", serif;
+    font-size: 40px;
+    color: #3b5e2c;
+}
+
+.img2 {
+    width: 30%;
+    background-image: url('/images/pessoa-img2.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.img1, .img2 {
+    background-position: bottom;
+}
