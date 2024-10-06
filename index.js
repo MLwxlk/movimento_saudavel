@@ -79,7 +79,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-    res.render('register', { title: 'Cadastro' });
+    res.render('cadastro', { title: 'Cadastro' });
 });
 
 app.get('/login', (req, res) => {
