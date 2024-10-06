@@ -6,9 +6,6 @@ const path = require('path');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const session = require('express-session');
 
 const db = mysql.createConnection({
     host: '127.0.0.1',
@@ -25,61 +22,12 @@ db.connect((err) => {
     console.log('Conectado ao banco.');
 });
 
-passport.use(new GoogleStrategy({
-    clientID: '1063425742192-07egvd1f9e7rr62t1ejjf6gsu2158sje.apps.googleusercontent.com',
-    clientSecret: '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',
-    callbackURL: "https://movimento-saudavel.vercel.app/auth/google/callback"
-  },
-  (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
-    return done(null, profile);
-  }
-));
-
-passport.serializeUser((user, done) => {
-    console.log('Serializando usuário:', user);
-    done(null, user);
-});
-  
-passport.deserializeUser((obj, done) => {
-    console.log('Desserializando usuário:', obj);
-    done(null, obj);
-});
- 
-
-app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-  
-app.get('/auth/google/callback', 
-    passport.authenticate('google', { failureRedirect: '/' }),
-    (req, res) => {
-        console.log('Usuário autenticado:', req.user);
-        res.redirect('/');
-    }
-);
-
-app.use((err, req, res, next) => {
-    console.error('Erro no callback do Google:', err);
-    res.status(500).send('Erro no servidor: ' + err.message);
-});
-
-app.use(session({ 
-    secret: 'mY!S3cUr3&K3y_2024', 
-    resave: true, 
-    saveUninitialized: true 
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
