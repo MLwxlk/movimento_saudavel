@@ -17,7 +17,7 @@
     <!-- Login Form -->
     <div class="login-box">
       <h2>Login</h2>
-      <form action="#">
+      <form action="/login" method="POST">
         <label for="username">Usuário</label>
         <input type="text" id="username" name="username" required>
         
@@ -28,8 +28,10 @@
         
         <div class="social-login">
           <p>Não tem uma conta? Entre com</p>
-          <img src="google-logo.png" alt="Google Login" class="google-logo">
-          <p>ou <a href="/cadastro">Cadastre-se</a></p>
+          <a href="/auth/google">
+            <img src="google-logo.png" alt="Google Login" class="google-logo">
+          </a>
+          <p>ou <a href="/register">Cadastre-se</a></p>
         </div>
       </form>
     </div>

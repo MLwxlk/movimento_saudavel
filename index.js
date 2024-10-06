@@ -6,6 +6,9 @@ const path = require('path');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
 
 const db = mysql.createConnection({
     host: '127.0.0.1',
@@ -21,6 +24,39 @@ db.connect((err) => {
     }
     console.log('Conectado ao banco.');
 });
+
+passport.use(new GoogleStrategy({
+    clientID: '1063425742192-07egvd1f9e7rr62t1ejjf6gsu2158sje.apps.googleusercontent.com',
+    clientSecret: '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',
+    callbackURL: "https://movimento-saudavel.vercel.app/auth/google/callback"
+  },
+  (accessToken, refreshToken, profile, done) => {
+    return done(null, profile);
+  }
+));
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+  
+passport.deserializeUser((obj, done) => {
+    done(null, obj);
+});  
+
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+  
+app.get('/auth/google/callback', 
+    passport.authenticate('google', { failureRedirect: '/' }),
+    (req, res) => {
+      res.redirect('/');
+    }
+);
+
+app.use(session({ secret: 'mY!S3cUr3&K3y_2024', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
