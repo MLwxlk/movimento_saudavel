@@ -51,14 +51,17 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        if (!req.user) {
-            return res.status(500).send('Erro durante o login com Google.');
-        }
+        console.log('Usuário autenticado:', req.user);
         res.redirect('/');
     }
 );
 
-app.use(session({ secret: 'mY!S3cUr3&K3y_2024', resave: true, saveUninitialized: true }));
+app.use(session({ 
+    secret: 'mY!S3cUr3&K3y_2024', 
+    resave: true, 
+    saveUninitialized: true 
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
