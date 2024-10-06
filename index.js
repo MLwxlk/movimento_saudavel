@@ -4,7 +4,7 @@ const app = express();
 const exphbs = require('express-handlebars');
 const path = require('path');
 const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const db = mysql.createConnection({
