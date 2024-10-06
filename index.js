@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: '127.0.0.1',
     user: 'root',
     password: 'alysson159',
     database: 'movimento_saudavel'
