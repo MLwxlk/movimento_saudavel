@@ -25,6 +25,8 @@ db.connect((err) => {
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -43,56 +45,58 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    const { name, cpf, convenio, email, password } = req.body;
+    
+    const { username, cpf, convenio, email, senha } = req.body;
 
-    bcrypt.hash(password, saltRounds, (err, hash) => {
+    if (!senha) {
+        return res.status(400).send('A senha é obrigatória.');
+    }
+
+    bcrypt.hash(senha, saltRounds, (err, hash) => {
         if (err) {
             console.error('Erro ao hashear senha:', err);
             res.status(500).send('Erro no servidor');
             return;
         }
 
-        const sql = 'INSERT INTO users (name, cpf, convenio, email, password_hash) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [name, cpf, convenio, email, hash], (err, result) => {
+        const sql = 'INSERT INTO users (username, cpf, convenio, email, senha) VALUES (?, ?, ?, ?, ?)';
+        db.query(sql, [username, cpf.replace(/\D/g, ''), convenio, email, hash], (err, result) => {
             if (err) {
                 console.error('Erro ao criar usuário:', err);
                 res.status(500).send('Erro ao criar usuário');
                 return;
             }
-            res.send('Usuário registrado com sucesso!');
+            res.redirect('/');
         });
     });
 });
 
 app.post('/login', (req, res) => {
-    const { email, password } = req.body;
+    const { email, senha } = req.body;
 
     const sql = 'SELECT * FROM users WHERE email = ?';
     db.query(sql, [email], (err, results) => {
         if (err) {
             console.error('Erro ao buscar usuário:', err);
-            res.status(500).send('Erro no servidor');
-            return;
+            return res.status(500).json({ message: 'Erro no servidor' });
         }
 
         if (results.length === 0) {
-            res.status(401).send('Usuário não encontrado');
-            return;
+            return res.status(401).json({ message: 'Usuário não encontrado' });
         }
 
         const user = results[0];
 
-        bcrypt.compare(password, user.password_hash, (err, result) => {
+        bcrypt.compare(senha, user.senha, (err, result) => {
             if (err) {
                 console.error('Erro ao comparar senhas:', err);
-                res.status(500).send('Erro no servidor');
-                return;
+                return res.status(500).json({ message: 'Erro no servidor' });
             }
 
             if (result) {
-                res.send('Login bem-sucedido!');
+                return res.status(200).json({ message: 'Login bem-sucedido' });
             } else {
-                res.status(401).send('Senha incorreta');
+                return res.status(401).json({ message: 'Senha incorreta' });
             }
         });
     });

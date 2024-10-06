@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro Page</title>
   <link rel="stylesheet" href="/css/cadastro.css">
+  <link rel="stylesheet" href="/css/cabeçalho.css">
 </head>
 <body>
-  <div class="container">
     <!-- Background shapes -->
     <div class="circle-shape"></div>
     <div class="triangle-shape">
       <p>Cadastre-se na nossa<br><strong>Plataforma</strong></p>
     </div>
-    
+  <div class="container">
     <!-- Sign-Up Form -->
     <div class="signup-box">
       <h2>Cadastro</h2>
       <!-- Alterei o action para "/register" e o method para "POST" -->
       <form action="/register" method="POST">
         <label for="name">Nome</label>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="username" required>
         
         <label for="cpf">CPF</label>
         <input type="text" id="cpf" name="cpf" required placeholder="___.___.___-__">
@@ -36,7 +36,7 @@
         <input type="email" id="email" name="email" required>
         
         <label for="password">Senha</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="senha" required>
         
         <div class="password-hints">
           <p><span>●</span> Mínimo de 8 dígitos</p>
@@ -47,5 +47,6 @@
       </form>
     </div>
   </div>
+  <script src="JavaScript/cadastro.js"></script>
 </body>
 </html>

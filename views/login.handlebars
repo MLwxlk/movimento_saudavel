@@ -5,33 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="/css/cabeçalho.css">
 </head>
 <body>
-  <div class="container">
+  
     <!-- Background shapes -->
     <div class="circle-shape"></div>
     <div class="triangle-shape">
       <p>Faça Login em nossa<br><strong>Plataforma</strong></p>
     </div>
-    
+  <div class="container">
+  
     <!-- Login Form -->
-    <div class="login-box">
+    <div class="login-box" id="login-box">
       <h2>Login</h2>
       <form action="/login" method="POST">
-        <label for="username">Usuário</label>
-        <input type="text" id="username" name="username" required>
+        <label for="username">E-mail</label>
+        <input type="text" id="email" name="email" required>
         
         <label for="password">Senha</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="senha" required>
+        <span id="error-message" style="color: red;"></span>
         
         <button type="submit">ENTRAR</button>
         
         <div class="social-login">
-          <p>Não tem uma conta? Entre com</p>
-          <p>ou <a href="/register">Cadastre-se</a></p>
+          <p>Não tem uma conta?</p>
+          <a href="/register">Cadastre-se</a></p>
         </div>
       </form>
     </div>
   </div>
+  <script src="JavaScript/login.js"></script>
 </body>
 </html>
