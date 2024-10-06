@@ -31,6 +31,7 @@ passport.use(new GoogleStrategy({
     callbackURL: "https://movimento-saudavel.vercel.app/auth/google/callback"
   },
   (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
     return done(null, profile);
   }
 ));
@@ -50,7 +51,10 @@ app.get('/auth/google',
 app.get('/auth/google/callback', 
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-      res.redirect('/');
+        if (!req.user) {
+            return res.status(500).send('Erro durante o login com Google.');
+        }
+        res.redirect('/');
     }
 );
 
