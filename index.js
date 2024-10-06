@@ -99,6 +99,10 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/comecar', (req, res) => {
+    res.render('comecar', { title: 'começar' });
+});
+
 app.listen(3000, () => {
     console.log('Servidor rodando na porta http://localhost:3000');
 });
