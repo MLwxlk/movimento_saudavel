@@ -37,12 +37,15 @@ passport.use(new GoogleStrategy({
 ));
 
 passport.serializeUser((user, done) => {
+    console.log('Serializando usuário:', user);
     done(null, user);
 });
   
 passport.deserializeUser((obj, done) => {
+    console.log('Desserializando usuário:', obj);
     done(null, obj);
-});  
+});
+ 
 
 app.get('/auth/google',
     passport.authenticate('google', { scope: ['profile', 'email'] })
@@ -55,6 +58,11 @@ app.get('/auth/google/callback',
         res.redirect('/');
     }
 );
+
+app.use((err, req, res, next) => {
+    console.error('Erro no callback do Google:', err);
+    res.status(500).send('Erro no servidor: ' + err.message);
+});
 
 app.use(session({ 
     secret: 'mY!S3cUr3&K3y_2024', 
