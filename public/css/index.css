@@ -40,3 +40,45 @@
 .img1, .img2 {
     background-position: bottom;
 }
+
+/* ABOUT */
+
+.about {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-about {
+    width: 70%;
+    height: 75vh;
+    background-color: #91CD76;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    gap: 1rem;
+
+}
+
+.img-form {
+    width: 90%;
+    display: flex;
+}
+
+.img img {
+    width: 300px;
+    height: 300px;
+}
+
+.form {
+    width: 500px;
+}
+
+p {
+    color: white;
+    font-size: 15px;
+}
