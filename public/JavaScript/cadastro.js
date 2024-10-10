@@ -1,60 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
     const cpfInput = document.getElementById('cpf');
-    const signupForm = document.getElementById('signup-box');
-  
-    // Verifique se os elementos foram encontrados
-    if (cpfInput && signupForm) {
-        cpfInput.addEventListener('input', function() {
-            function formatCPF(input) {
-                // Remove qualquer caractere que não seja número
-                let value = input.value.replace(/\D/g, '');
-    
-                // Adiciona a formatação (ex: 123.456.789-00)
-                if (value.length <= 11) {
-                    value = value.replace(/(\d{3})(\d)/, '$1.$2'); // 123.456
-                    value = value.replace(/(\d{3})(\d)/, '$1.$2'); // 123.456.789
-                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // 123.456.789-00
-                }
-                input.value = value;
-            }
+    const signupForm = document.getElementById('signupForm');
+    const passwordInput = document.getElementById('password');
 
+    if (cpfInput && signupForm && passwordInput) {
+        cpfInput.addEventListener('input', function () {
             formatCPF(cpfInput);
         });
-        
-        signupForm.addEventListener('submit', function(event) {
-            const cpf = cpfInput.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-            const password = document.getElementById('password').value;
 
+        signupForm.addEventListener('submit', function (event) {
+            const cpf = cpfInput.value.replace(/\D/g, '');
+            const password = passwordInput.value;
+            const hintContainer = document.querySelector('.password-hints');
+            
             // Limpa as mensagens anteriores
-            document.getElementById('hint1').textContent = "● Mínimo de 8 dígitos";
-            document.getElementById('hint2').textContent = "● Não usar o CPF ou número sequencial";
+            hintContainer.innerHTML = `
+              <p><span>●</span> Mínimo de 8 dígitos</p>
+              <p><span>●</span> Não usar o CPF ou número sequencial</p>
+            `;
 
-            // Verifica se a senha tem menos de 8 dígitos
+            let messages = [];
+
+            // Verifica se a senha tem menos de 8 caracteres
             if (password.length < 8) {
-                document.getElementById('hint1').textContent = "● A senha deve ter pelo menos 8 dígitos.";
-                document.getElementById('hint2').textContent = " ";
-                event.preventDefault(); // Bloqueia o envio do formulário
-                return;
+                messages.push("A senha deve ter pelo menos 8 caracteres.");
             }
 
             // Verifica se a senha é igual ao CPF
             if (password === cpf) {
-                document.getElementById('hint1').textContent = "● A senha não pode ser igual ao CPF.";
-                document.getElementById('hint2').textContent = " ";
-                event.preventDefault(); // Bloqueia o envio do formulário
-                return;
+                messages.push("A senha não pode ser igual ao CPF.");
             }
 
             // Verifica se a senha é um número sequencial
-            const sequentialNumbers = Array.from({ length: 10 }, (_, i) => i.toString().repeat(8)); // Gera sequências de 0 a 9 com 8 dígitos
+            const sequentialNumbers = Array.from({ length: 10 }, (_, i) => i.toString().repeat(8));
             if (sequentialNumbers.includes(password)) {
-                document.getElementById('hint1').textContent = "● A senha não pode ser um número sequencial.";
-                document.getElementById('hint2').textContent = " ";
+                messages.push("A senha não pode ser um número sequencial.");
+            }
+
+            // Verifica se a senha contém uma letra maiúscula
+            if (!/[A-Z]/.test(password)) {
+                messages.push("A senha deve conter pelo menos uma letra maiúscula.");
+            }
+
+            // Verifica se a senha contém um caractere especial
+            if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                messages.push("A senha deve conter pelo menos um caractere especial.");
+            }
+
+            // Se houver mensagens de erro, impedir o envio do formulário e exibir todas as mensagens em linhas separadas
+            if (messages.length > 0) {
+                hintContainer.innerHTML = messages.map(msg => `<p><span>●</span> ${msg}</p>`).join('');
                 event.preventDefault(); // Bloqueia o envio do formulário
-                return;
             }
         });
     } else {
-        console.error('Elementos não encontrados: cpf ou signupForm');
+        console.error('Elementos não encontrados: cpf, signupForm ou passwordInput');
     }
 });
+
+function formatCPF(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value.length <= 11) {
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d)/, '$1.$2');
+        value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+    input.value = value;
+}
