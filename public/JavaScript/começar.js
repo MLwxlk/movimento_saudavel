@@ -12,20 +12,41 @@ function loadContent(tabName) {
     // Carregar conteúdo baseado na aba clicada
     if (tabName === 'agendamentos') {
         dynamicContentDiv.innerHTML = `
-            <h2>Agendamentos</h2>
-            <p>Aqui estão seus agendamentos...</p>
-            <!-- Adicione mais conteúdo relevante aqui -->
+            <h2>Seus agendamentos</h2>
+                <div id="agendamentos-box">
+                    <select name="Ordenar" id="ordenar">
+                        <option value="">Data</option>
+                        <option value="">A-Z</option>
+                    </select>
+                    <div id="consultas-box">
+                        <!-- conteudo da consulta
+                        <div id="consultas">
+                            <h3>CONSULTA MARCADA PARA O DIA <span id="dia_consult">02/10</span></h3><br>
+                            <p>Dra. Paula <span id="hora_consult">15:30</span></p>
+                        </div>
+                        -->
+                    </div>
+                </div>
+                <a id="agendamento-btn" href="#">NOVO AGENDAMENTO</a>
         `;
     } else if (tabName === 'exames') {
         dynamicContentDiv.innerHTML = `
-            <div class="exames">
-                    <select id="select">
-                        <option value="">Ordem alfabetica</option>
-                        <option value="">Data</option>
-                    </select>
-                    <p id="if_noExames">VOCÊ NÃO POSSUI EXAMES REALIZADOS</p>
-                </div>
-                <a id="btn_" href="#">MARCAR EXAME</a>
+            <h2>Seus exames</h2>
+                    <div class="exames">
+                        <select id="select">
+                            <option value="">Data</option>
+                            <option value="">A-Z</option>
+                        </select>
+                        <div id="exames-box">
+                            <!-- Conteudo dos exames realizados
+                            <div id="exames">
+                                <h3>EXAME CONCLUIDO NO DIA <span id="dia_exame">02/10</span></h3><br>
+                                <p>Dra. Paula <span id="hora_exame">15:30</span></p>
+                            </div>
+                            -->
+                        </div>
+                    </div>
+                     <a id="btn_exames" href="#">MARCAR EXAME</a>
         `;
     } else if (tabName === 'metas') {
         dynamicContentDiv.innerHTML = `
