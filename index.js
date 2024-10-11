@@ -3,24 +3,11 @@ const bodyParser = require('body-parser');
 const app = express();
 const exphbs = require('express-handlebars');
 const path = require('path');
-const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
-const db = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'alysson159',
-    database: 'movimento_saudavel'
-});
-
-db.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar o banco:', err);
-        return;
-    }
-    console.log('Conectado ao banco.');
-});
+// Cache em memória para armazenar usuários
+let userCache = {};
 
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
@@ -44,66 +31,64 @@ app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
 });
 
+// Rota para registrar um novo usuário
 app.post('/register', (req, res) => {
-    
     const { username, cpf, convenio, email, senha } = req.body;
 
     if (!senha) {
         return res.status(400).send('A senha é obrigatória.');
     }
 
+    // Verifica se o e-mail já está cadastrado no cache
+    if (userCache[email]) {
+        return res.status(400).send('Usuário já registrado.');
+    }
+
     bcrypt.hash(senha, saltRounds, (err, hash) => {
         if (err) {
             console.error('Erro ao hashear senha:', err);
-            res.status(500).send('Erro no servidor');
-            return;
+            return res.status(500).send('Erro no servidor');
         }
 
-        const sql = 'INSERT INTO users (username, cpf, convenio, email, senha) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [username, cpf.replace(/\D/g, ''), convenio, email, hash], (err, result) => {
-            if (err) {
-                console.error('Erro ao criar usuário:', err);
-                res.status(500).send('Erro ao criar usuário');
-                return;
-            }
-            res.redirect('/');
-        });
+        // Salva o usuário no cache
+        userCache[email] = {
+            username,
+            cpf: cpf.replace(/\D/g, ''),
+            convenio,
+            email,
+            senha: hash
+        };
+
+        res.redirect('/');
     });
 });
 
+// Rota para login
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
 
-    const sql = 'SELECT * FROM users WHERE email = ?';
-    db.query(sql, [email], (err, results) => {
+    const user = userCache[email];
+
+    if (!user) {
+        return res.status(401).json({ message: 'Usuário não encontrado' });
+    }
+
+    bcrypt.compare(senha, user.senha, (err, result) => {
         if (err) {
-            console.error('Erro ao buscar usuário:', err);
+            console.error('Erro ao comparar senhas:', err);
             return res.status(500).json({ message: 'Erro no servidor' });
         }
 
-        if (results.length === 0) {
-            return res.status(401).json({ message: 'Usuário não encontrado' });
+        if (result) {
+            return res.status(200).json({ message: 'Login bem-sucedido' });
+        } else {
+            return res.status(401).json({ message: 'Senha incorreta' });
         }
-
-        const user = results[0];
-
-        bcrypt.compare(senha, user.senha, (err, result) => {
-            if (err) {
-                console.error('Erro ao comparar senhas:', err);
-                return res.status(500).json({ message: 'Erro no servidor' });
-            }
-
-            if (result) {
-                return res.status(200).json({ message: 'Login bem-sucedido' });
-            } else {
-                return res.status(401).json({ message: 'Senha incorreta' });
-            }
-        });
     });
 });
 
 app.get('/comecar', (req, res) => {
-    res.render('comecar', { title: 'começar' });
+    res.render('comecar', { title: 'Começar' });
 });
 
 app.listen(3000, () => {
