@@ -48,7 +48,7 @@ function renderizarExercicio() {
             <div class="fim-exercicio">
                 <h1>SEUS EXERCÍCIOS DE HOJE CHEGARAM AO FIM!</h1>
                 <img src="/images/fim-exercicios.png" alt="Fim dos Exercícios" style="width: 200px; margin-top: 20px;">
-                <p><a href="#">VOLTAR A PÁGINA INICIAL</a>
+                <p><a href="/exercicio">VOLTAR A PÁGINA INICIAL</a>
             </div>
         `;
         // Desativa os botões ao chegar ao fim

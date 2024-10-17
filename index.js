@@ -91,6 +91,14 @@ app.get('/comecar', (req, res) => {
     res.render('comecar', { title: 'Começar' });
 });
 
+app.get('/exercicio', (req, res) => {
+    res.render('exercicio', { title: 'Exercicios' });
+});
+
+app.get('/exercicio-start', (req, res) => {
+    res.render('exercicio-start', { title: 'Exercicios' });
+}); 
+
 app.listen(3000, () => {
     console.log('Servidor rodando na porta http://localhost:3000');
 });
