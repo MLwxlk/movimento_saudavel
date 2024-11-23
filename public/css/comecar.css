@@ -138,7 +138,7 @@ select {
     cursor: pointer;
 }
 
-#consultas {
+.consultas {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -148,18 +148,31 @@ select {
     border-radius: 15px;
 }
 
-#consultas h3 {
+.consultas h3 {
     font-size: 15px;
     color: #5EAB3C;
 }
 
-#consultas p {
+.consultas p {
     display: flex;
     flex-direction: row;
     margin-left: 21px;
     color: #5EAB3C;
     font-size: 15px;
     gap:50px;
+}
+
+#datepicker {
+    width: 220px;
+    height: 40px;
+    margin: 20px 0px;
+}
+.flatpickr-calendar.inline {
+    display: flex;
+    position: relative;
+    top: 2px;
+    left: 95px;
+    flex-direction: column;
 }
 
 /* Tela de Exames */
@@ -240,3 +253,105 @@ select:focus {
     box-shadow: none; /* Remove qualquer sombra ao focar */
 }
 
+/* Metas */
+
+#metas {
+    background-color: white;
+    height: 300px;
+    width: 450px;
+    max-height: 300px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#dias ul {
+    display: flex;
+    list-style-type: none; /* Remove os marcadores da lista */
+    justify-content: center;
+    gap: 20px;
+}
+
+#dias ul li button {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: none;
+}
+
+button.toggleButton.off {
+    background-color: #cceebc;
+}
+
+button.toggleButton.on {
+    background-color: #5EAB3C;
+}
+
+hr {
+    background-color:#3A7520;
+    width: 430px;
+    margin: 10px 0px;
+}
+
+.content-metas {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 350px;
+    margin: 20px;
+}
+
+.content-p {
+    display: flex;
+    gap: 50px;
+}
+
+.content-p span {
+    color: #3A7520;
+}
+
+.content-metas button {
+    border-radius: 50%;
+    border: none;
+    background-color: #cceebc;
+    height: 20px;
+    width: 20px;
+    margin-left: 150px;
+}
+
+#contentExercices {
+    display: none;
+}
+.content-exercices {
+    width: 350px;
+    margin: 10px 0px;
+    background-color: rgba(184, 241, 157, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.exercices {
+    width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exercices .nome {
+    color:#3A7520;
+    width: 300px;
+}
+
+.exercices .descanço {
+    color:#3A7520;
+    padding-left: 40px;
+}
+
+.exercices select {
+    width: 100px;
+    margin-right: 40px;
+}

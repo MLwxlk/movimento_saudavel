@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Perfil</title>
+    <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-picture">
+                <span>ADICIONAR FOTO DE PERFIL</span>
+            </div>
+            <div class="profile-details">
+                <input id="profile-name" type="text" class="profile-name" placeholder="SEM NOME" disabled value="{{username}}">
+                <input id="profile-dob" type="text" class="profile-dob" placeholder="__/__/____" disabled value="{{dataNascimento}}">
+                <input id="profile-insurance" type="text" class="profile-insurance" placeholder="SEM EMAIL" disabled value="{{email}}">
+                <button class="edit-profile">EDITAR SEUS DADOS</button>
+            </div>
+        </div>
+        <hr>
+        <div class="profile-menu">
+            <button>COMEÇAR</button>
+            <button>EXERCÍCIOS</button>
+            <button>CONTATO</button>
+        </div>
+        <div class="profile-footer">
+            <button class="back-button">VOLTAR AO INÍCIO</button>
+            <button class="logout-button">SAIR DA CONTA</button>
+        </div>
+    </div>
+
+    <!-- Script para preencher os dados -->
+    <script src="/JavaScript/settings.js"></script>
+</body>
+</html>

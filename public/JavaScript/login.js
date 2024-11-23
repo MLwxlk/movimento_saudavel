@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('login-box').addEventListener('submit', function(event) {
         event.preventDefault(); // Impede o envio padrão do formulário
 
+        // Limpa a mensagem de erro antes de tentar fazer o login
+        document.getElementById('error-message').innerText = '';
+
         const email = document.getElementById('email').value;
         const senha = document.getElementById('password').value;
 
@@ -12,15 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ email, senha }),
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json().then(data => {
-                    window.location.href = '/'; // Redireciona para a página inicial
-                });
+        .then(response => response.json()) // Processa a resposta como JSON
+        .then(data => {
+            if (data.message === 'Login bem-sucedido') {
+                // Redireciona para a página inicial
+                window.location.href = '/';
             } else {
-                return response.json().then(err => {
-                    document.getElementById('error-message').innerText = 'Email ou senha incorretos';
-                });
+                // Exibe a mensagem de erro, se o login falhou
+                document.getElementById('error-message').innerText = data.message || 'Erro ao realizar o login';
             }
         })
         .catch(error => {
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Limpa a mensagem de erro ao digitar
+    // Limpa a mensagem de erro ao digitar a senha
     document.getElementById('password').addEventListener('input', function() {
         document.getElementById('error-message').innerText = '';
     });
