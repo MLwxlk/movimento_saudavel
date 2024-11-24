@@ -1,0 +1,87 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  /* Cabeçalho */
+  .header {
+    background-color: #8bc34a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbar {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .user-icon {
+    font-size: 1.5rem;
+  }
+  
+  /* Seção de contato */
+  .contact-section {
+    background-color: #d5f5c0;
+    text-align: center;
+    padding: 30px 20px;
+  }
+  
+  .contact-section h1 {
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .contact-section p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+  
+  .contact-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .contact-item {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 200px;
+  }
+  
+  .icon {
+    font-size: 2rem;
+    color: #8bc34a;
+    margin-bottom: 10px;
+  }
+  
+  .contact-item p {
+    font-size: 0.9rem;
+  }
+  
