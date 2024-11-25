@@ -60,7 +60,23 @@ db.serialize(() => {
             usuario_id INTEGER NOT NULL,
             FOREIGN KEY (usuario_id) REFERENCES users(id)
         )
-    `)
+    `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS questionarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            data_nascimento TEXT NOT NULL,
+            peso REAL NOT NULL,
+            exercicios TEXT,
+            nivel_atividade TEXT,
+            condicao_medica TEXT,
+            lesao_cirurgia TEXT,
+            limitacao_movimento TEXT,
+            frequencia_exercicios TEXT,
+            duracao_exercicios TEXT
+        );
+    `);
 });
 
 
@@ -96,6 +112,14 @@ app.get('/comecar', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
+});
+
+app.get('/comecar_form', (req, res) => {
+    res.render('comecar_form', { title: 'Começar'});
+});
+
+app.get('/contato', (req, res) => {
+    res.render('contatos', { title: 'Contatos' });
 });
 
 function validarCPF(cpf) {
@@ -322,6 +346,53 @@ app.get('/settings', isAuthenticated, (req, res) => {
             email: row.email
         });
     });
+});
+
+app.post('/submit-questionnaire', isAuthenticated, (req, res) => {
+    const {
+        nome,
+        data_nascimento,
+        peso,
+        exercicios,
+        nivel_atividade,
+        medical_condition,
+        surgery,
+        limitation,
+        exercise_frequency,
+        exercise_duration
+    } = req.body;
+
+    // Verificar se os campos obrigatórios foram preenchidos
+    if (!nome || !data_nascimento || !peso) {
+        return res.status(400).json({ message: 'Campos obrigatórios não preenchidos.' });
+    }
+
+    // Salvar no banco de dados
+    db.run(
+        `INSERT INTO questionarios (
+            nome, data_nascimento, peso, exercicios, nivel_atividade, condicao_medica, lesao_cirurgia, limitacao_movimento, frequencia_exercicios, duracao_exercicios
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+            nome,
+            data_nascimento,
+            peso,
+            exercicios || null,
+            nivel_atividade || null,
+            medical_condition || null,
+            surgery || null,
+            limitation || null,
+            exercise_frequency || null,
+            exercise_duration || null
+        ],
+        function (err) {
+            if (err) {
+                console.error('Erro ao salvar o questionário:', err);
+                return res.status(500).json({ message: 'Erro no servidor ao salvar questionário.' });
+            }
+            res.status(200).json({ message: 'Questionário enviado com sucesso!' });
+            window.location.href = "/"
+        }
+    );
 });
 
 app.listen(3000, () => {

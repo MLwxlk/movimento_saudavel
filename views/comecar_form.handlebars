@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Informações</title>
+    <link rel="stylesheet" href="css/comecar_form.css">
+</head>
+<body>
+    <div class="container">
+        <h2>NÓS FALE UM POUCO MAIS SOBRE VOCÊ!</h2>
+        
+        <!-- Navegação do Carrossel -->
+        <div class="carousel-navigation">
+            <button id="prev_slide_btn" disabled>Voltar</button>
+            <div class="page-indicator">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <button id="next_slide_btn">Avançar</button>
+        </div>        
+
+        <!-- Formulário com Carrossel -->
+        <form id="questionnaire-form" class="form-grid" action="/submit-questionnaire" method="POST">
+        <!-- Slide 1 -->
+        <div class="carousel-slide active" id="slide1">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome" class="small-input">
+            </div>
+            <div class="form-group">
+                <label for="data-nascimento">Data de Nascimento:</label>
+                <input type="date" id="data-nascimento" name="data_nascimento" class="small-input">
+            </div>
+            <div class="form-group">
+                <label for="peso">Peso:</label>
+                <div class="input-with-unit">
+                    <input type="number" id="peso" name="peso" placeholder="Peso" class="small-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-slide" id="slide2" style="display: none;">
+            <div class="form-group">
+                <label for="exercicios">Você pratica exercícios regularmente? Se sim, quais?</label>
+                <input type="text" id="exercicios" name="exercicios" placeholder="Descreva os exercícios" class="small-input">
+            </div>
+            <div class="form-group">
+                <label for="nivel-atividade">Qual é o seu nível de atividade física? (sedentário, leve, moderado, intenso)</label>
+                <input type="text" id="nivel-atividade" name="nivel_atividade" placeholder="Descreva seu nível de atividade" class="small-input">
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-slide" id="slide3" style="display: none;">
+            <div class="form-group">
+                <label for="medical-condition">Condição médica atual:</label>
+                <input type="text" id="medical-condition" name="medical_condition" placeholder="Ex.: Diabetes, hipertensão, etc.">
+            </div>
+            <div class="form-group">
+                <label for="surgery">Lesão ou cirurgia relevante:</label>
+                <input type="text" id="surgery" name="surgery" placeholder="Se sim, qual?" class="small-input">
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="carousel-slide" id="slide4" style="display: none;">
+            <div class="form-group">
+                <label for="limitation">Você tem alguma limitação de movimento ou dor? Se sim, onde?</label>
+                <input
+                    type="text"
+                    id="limitation"
+                    name="limitation"
+                    placeholder="Ex.: Ombro direito, joelho, etc."
+                    class="small-input"
+                >
+            </div>
+            <div class="form-group">
+                <label for="exercise-frequency">Quantas vezes por semana você pode se exercitar?</label>
+                <select id="exercise-frequency" name="exercise_frequency" class="small-input">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="1-2">1-2 vezes</option>
+                    <option value="3-4">3-4 vezes</option>
+                    <option value="5+">5 ou mais vezes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exercise-duration">Quanto tempo você tem disponível para cada sessão de exercícios?</label>
+                <select id="exercise-duration" name="exercise_duration" class="small-input">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="15">15 minutos</option>
+                    <option value="30">30 minutos</option>
+                    <option value="45">45 minutos</option>
+                    <option value="60+">1 hora ou mais</option>
+                </select>
+            </div>
+        </div>
+        </form>
+        <!-- Botões fixos -->
+        <div class="form-actions">
+            <button type="button" class="submit-btn">Salvar Alterações</button>
+            <button class="skip-btn" onclick="skipQuestionnaire()">Responder ao questionário depois</button>
+        </div>
+    </div>
+
+    <script src="JavaScript/comecar_form.js"></script>
+</body>
+</html>
