@@ -74,12 +74,12 @@
 }
 
 #btn_ {
-    font-size: 40px;
+    font-size: 30px;
     background-color: white;
     color: #5EAB3C;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 50px;
     text-decoration: none;
-    border-radius: 15px;
+    border-radius: 50px;
 }
 
 /* Tela de Agendamento */
