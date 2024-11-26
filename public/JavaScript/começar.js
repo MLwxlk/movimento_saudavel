@@ -90,7 +90,7 @@ function loadContent(tabName) {
             <p id="titulo">Agende a sua consulta<br> no melhor
                 dia e horário para você.</p>
                 <input type="date" id="data_consulta">
-                <input type="text" id="hora">
+                <input type="text" id="hora" placeholder="Hora">
                 <a href="#" id="btn_agendar">AGENDAR</a>
         `;
 
