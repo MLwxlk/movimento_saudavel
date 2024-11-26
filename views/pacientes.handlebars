@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pacientes</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e0f7df;
+        }
+        .container {
+            width: 700px;
+            background-color: rgba(145, 205, 118, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: white;
+        }
+        .container h2 {
+            margin: 0;
+            padding-bottom: 20px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            padding: 10px;
+            width: 80%;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+        .search-bar button {
+            padding: 10px;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            background-color: #fff;
+            cursor: pointer;
+        }
+        .patient-list {
+            background-color: #ffffff;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .patient {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .patient:last-child {
+            border-bottom: none;
+        }
+        .edit-link {
+            color: #76c893;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>PACIENTES</h2>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Pesquise por CPF, ID ou nome" onkeyup="filtrarPacientes()">
+            <button>🔍</button>
+        </div>
+        <div class="patient-list" id="patientList">
+            {{#each pacientes}}
+            <div class="patient">
+                <span>{{this.nome}} ({{this.id}})</span>
+                {{!-- <span>{{this.cpf}}</span> --}}
+                <span>xxx.xxx.xxx-xx</span>
+                <span>{{this.dataNascimento}} ({{this.idade}} anos)</span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <script>
+        // Função para filtrar pacientes
+        function filtrarPacientes() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const patients = document.querySelectorAll('.patient');
+            
+            patients.forEach(patient => {
+                const nome = patient.querySelector('span').textContent.toLowerCase();
+                const cpf = patient.querySelectorAll('span')[1].textContent.toLowerCase();
+                const id = patient.querySelectorAll('span')[0].textContent.toLowerCase();
+                
+                // Se o nome, cpf ou id contiverem o texto da pesquisa, mostra o paciente
+                if (nome.includes(searchInput) || cpf.includes(searchInput) || id.includes(searchInput)) {
+                    patient.style.display = '';
+                } else {
+                    patient.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

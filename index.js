@@ -4,6 +4,7 @@ const app = express();
 const exphbs = require('express-handlebars');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 const saltRounds = 10;
 const session = require('express-session'); // Importando o express-session
 const sqlite3 = require('sqlite3').verbose();
@@ -75,7 +76,9 @@ db.serialize(() => {
             lesao_cirurgia TEXT,
             limitacao_movimento TEXT,
             frequencia_exercicios TEXT,
-            duracao_exercicios TEXT
+            duracao_exercicios TEXT,
+            usuario_id INTEGER,
+            FOREIGN KEY (usuario_id) REFERENCES users(id)
         );
     `);
 });
@@ -193,6 +196,28 @@ function validarCPF(cpf) {
     if (digito2 !== parseInt(cpf.charAt(10))) return false;
 
     return true;
+}
+
+function calcularIdade(dataNascimento) {
+    const dataAtual = new Date();
+    const nascimento = new Date(dataNascimento);
+
+    // Verificar se a data de nascimento é válida
+    if (isNaN(nascimento)) {
+        console.error('Data de nascimento inválida', dataNascimento);
+        return 0;
+    }
+
+    let idade = dataAtual.getFullYear() - nascimento.getFullYear();
+    const mesAtual = dataAtual.getMonth();
+    const mesNascimento = nascimento.getMonth();
+
+    // Verifica se já passou o aniversário este ano
+    if (mesAtual < mesNascimento || (mesAtual === mesNascimento && dataAtual.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+
+    return idade;
 }
 
 // Rota para registrar um novo usuário
@@ -501,6 +526,39 @@ app.post('/delete-user-by-email', async (req, res) => {
         console.error('Erro ao deletar o usuário:', err);
         res.status(500).send('Erro no servidor.');
     }
+});
+
+function formatarCPF(cpf) {
+    if (!cpf) {
+        return ''; // ou qualquer valor que você prefira, como 'CPF não disponível'
+    }
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+}
+
+app.get('/adm_pacientes', (req, res) => {
+    db.all(`
+        SELECT id, username, cpf, data_nasc
+        FROM users
+    `, (err, rows) => {
+        if (err) {
+            return res.status(500).send('Erro ao buscar dados do banco');
+        }
+
+        // Verifique os dados retornados do banco de dados
+        console.log(rows); // Isso vai mostrar todos os dados retornados
+
+        // Manipulando os dados e calculando a idade
+        const pacientes = rows.map(paciente => ({
+            nome: paciente.username, // Aqui estamos usando 'username' como nome
+            id: paciente.id,
+            cpf: formatarCPF(paciente.cpf), // Formata o CPF
+            dataNascimento: paciente.data_nasc,
+            idade: calcularIdade(paciente.data_nasc) // Calculando a idade a partir da data de nascimento
+        }));        
+
+        // Renderizando a página com os dados
+        res.render('pacientes', { pacientes });
+    });
 });
 
 app.listen(3000, () => {

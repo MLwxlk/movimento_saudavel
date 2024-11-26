@@ -10,6 +10,9 @@ body {
 .appointments {
     max-height: 400px;
     overflow-y: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
 }
 
 #appointment-date {
@@ -18,6 +21,7 @@ body {
     height: 30px;
     border-radius: 10px;
     padding-left: 5px;
+    margin: 10px;
 }
 
 .container {
