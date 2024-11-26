@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #eaf4e1;
+  }
+  
+  .container {
+    width: 100%;
+    position: relative;
+  }
+  
+  header {
+    background-color: #91CD76;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  #logo {
+    width: 120px;
+    cursor: pointer;
+  }
+  
+  .exercise-plan {
+    width: 100%;
+    margin-top: 100px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .plan-title {
+    width: 100%;
+    text-align: center;
+    background-color: #91CD76;
+    color: #FFFFFF;
+    width: 100%;
+    padding: 20px 0;
+  }
+  
+  .plan-title h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .plan-title p {
+    font-size: 16px;
+  }
+  
+  .exercise-form {
+    background-color: #F0F0F0;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .form-row input {
+    width: 48%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .exercise-fields .exercise-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .exercise-row input {
+    width: 23%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-media {
+    text-decoration: none;
+    color: #37721E;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .add-media:hover {
+    text-decoration: underline;
+  }
+  
+  .align-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .add-exercise {
+    background-color: #417629;
+    color: white;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+  }
+  
+  .add-exercise:hover {
+    transition: 0.3s;
+    background-color: #91CD76;
+  }
+  
+  .save-button {
+    background-color: #FFFFFF;
+    color: #417629;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  
+  .save-button:hover {
+    transition: 0.3s;
+    background-color: #417629;
+    color: #ffff;
+  }
