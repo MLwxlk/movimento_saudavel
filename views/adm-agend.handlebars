@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos</title>
+    <link rel="stylesheet" href="css/adm-agend.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AGENDAMENTOS</h1>
+        </div>
+        <div class="date-controls">
+            <input type="date" id="appointment-date" value="2024-10-10">
+        </div>
+        <div class="appointments">
+            {{#each agendamentos}}
+                <div class="consultas">
+                    <h3>Consulta marcada para o dia <span>{{data_consulta}}</span></h3>
+                    <p>{{username}} <span>{{hora}}</span></p>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    <script src="JavaScript/adm-agend.js"></script>
+</body>
+</html>

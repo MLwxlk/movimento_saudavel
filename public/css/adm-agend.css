@@ -1,0 +1,56 @@
+body {
+    font-family: 'Mukta', sans-serif;
+    background-color: #e8f5e9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.appointments {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#appointment-date {
+    background-color: rgba(145, 205, 118, 0.5);
+    border: none;
+    height: 30px;
+    border-radius: 10px;
+    padding-left: 5px;
+}
+
+.container {
+    background-color: #c8e6c9;
+    width: 500px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+}
+
+.consultas {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(145, 205, 118, 0.5);
+    width: 300px;
+    height: 80px;
+    border-radius: 15px;
+}
+
+.consultas h3 {
+    font-size: 15px;
+    color: #5EAB3C;
+    margin-left: 21px;
+}
+
+.consultas p {
+    display: flex;
+    flex-direction: row;
+    margin-left: 21px;
+    color: #5EAB3C;
+    font-size: 15px;
+    gap:50px;
+}

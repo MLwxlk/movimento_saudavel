@@ -27,7 +27,8 @@ db.serialize(() => {
             cpf TEXT UNIQUE NOT NULL,
             data_nasc TEXT NOT NULL,
             email TEXT UNIQUE NOT NULL,
-            senha TEXT NOT NULL
+            senha TEXT NOT NULL,
+            is_admin INTERGER DEFAULT 0
         )
     `);    
 
@@ -90,8 +91,47 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Middleware para definir o menu baseado no tipo de usuário
+app.use((req, res, next) => {
+    if (req.session.user && req.session.user.is_admin) {
+        res.locals.menu = [
+            { icon: 'fa-solid fa-users-cog', text: 'Pacientes', link: '/adm_pacientes' },
+                { icon: 'fa-solid fa-chart-line', text: 'Exames', link: '/adm_exames' },
+                { icon: 'fa-solid fa-cogs', text: 'Exercicios', link: '/adm_exercicios' },
+                { icon: 'fa-solid fa-calendar-days', text: 'Agendamentos', link: '/adm_agend'}
+            ];
+    } else {
+        res.locals.menu = [
+            { icon: 'fa-solid fa-headset', text: 'Começar', link: '/comecar' },
+            { icon: 'fa-solid fa-dumbbell', text: 'Exercícios', link: '/exercicio' },
+            { icon: 'fa-solid fa-bars', text: 'Contato', link: '/contato' }
+        ];
+    }
+    next();
+});
+
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Home' });
+    if (req.session.user && req.session.user.is_admin) {
+        // Renderiza o menu para administradores
+        
+        return res.render('index', {
+            menu: [
+                { icon: 'fa-solid fa-users-cog', text: 'Pacientes', link: '/adm_pacientes' },
+                { icon: 'fa-solid fa-chart-line', text: 'Exames', link: '/adm_exames' },
+                { icon: 'fa-solid fa-cogs', text: 'Exercicios', link: '/adm_exercicios' },
+                { icon: 'fa-solid fa-calendar-days', text: 'Agendamentos', link: '/adm_agend'}
+            ]
+        });
+    }
+
+    // Renderiza o menu para usuários normais
+    res.render('index', {
+        menu: [
+            { icon: 'fa-solid fa-headset', text: 'Começar', link: '/comecar' },
+            { icon: 'fa-solid fa-dumbbell', text: 'Exercícios', link: '/exercicio' },
+            { icon: 'fa-solid fa-bars', text: 'Contato', link: '/contato' }
+        ]
+    });
 });
 
 app.get('/exercicio', (req, res) => {
@@ -157,7 +197,6 @@ function validarCPF(cpf) {
 
 // Rota para registrar um novo usuário
 app.post('/register', async (req, res) => {
-    console.log(req.body);
     const { username, cpf, data_nasc, email, senha } = req.body;
 
     if (!senha) {
@@ -168,6 +207,9 @@ app.post('/register', async (req, res) => {
     if (!validarCPF(cpf)) {
         return res.status(400).send('CPF inválido.');
     }
+
+    // Define a senha de administrador
+    const senhaAdmin = 'LoginDeAdmin555!';
 
     try {
         // Verifica se o e-mail ou CPF já estão registrados
@@ -182,21 +224,27 @@ app.post('/register', async (req, res) => {
             return res.status(400).send('Usuário já registrado.');
         }
 
+        // Verifica se a senha fornecida é a senha de admin
+        const isAdmin = (senha === senhaAdmin) ? 1 : 0;
+
         // Hasheia a senha
         const hashedPassword = await bcrypt.hash(senha, saltRounds);
 
         // Insere o usuário no banco de dados
         await new Promise((resolve, reject) => {
             db.run(
-                `INSERT INTO users (username, cpf, email, senha, data_nasc) 
-                 VALUES (?, ?, ?, ?, ?)`,
-                [username, cpf.replace(/\D/g, ''), email, hashedPassword, data_nasc],
+                `INSERT INTO users (username, cpf, email, senha, data_nasc, is_admin) 
+                 VALUES (?, ?, ?, ?, ?, ?)`,
+                [username, cpf.replace(/\D/g, ''), email, hashedPassword, data_nasc, isAdmin],
                 function (err) {
                     if (err) return reject(err);
                     resolve();
                 }
             );
         });
+
+        // Log correto com as variáveis definidas
+        console.log('Usuário cadastrado:', { username, cpf, email, isAdmin });
 
         res.redirect('/'); // Redireciona para a página inicial após o cadastro
     } catch (err) {
@@ -205,6 +253,16 @@ app.post('/register', async (req, res) => {
     }
 });
 
+// Middleware para verificar se o usuário é administrador
+function isAdmin(req, res, next) {
+    if (req.session.user && req.session.user.is_admin) {
+        return next(); // O usuário é um administrador
+    } else {
+        return res.status(403).json({ message: 'Acesso restrito: Apenas administradores podem acessar esta página.' });
+    }
+}
+
+// Atualize o login para incluir o campo "is_admin" na sessão
 app.post('/login', (req, res) => {
     const { email, senha } = req.body;
 
@@ -228,7 +286,7 @@ app.post('/login', (req, res) => {
 
             if (result) {
                 // Autenticação bem-sucedida, armazene a informação na sessão
-                req.session.user = { id: row.id, email: row.email };
+                req.session.user = { id: row.id, email: row.email, is_admin: row.is_admin }; // Inclua o campo is_admin
                 console.log('Sessão criada:', req.session.user); // Log de depuração
                 return res.status(200).json({ message: 'Login bem-sucedido' });
             } else {
@@ -390,9 +448,59 @@ app.post('/submit-questionnaire', isAuthenticated, (req, res) => {
                 return res.status(500).json({ message: 'Erro no servidor ao salvar questionário.' });
             }
             res.status(200).json({ message: 'Questionário enviado com sucesso!' });
-            window.location.href = "/"
+            res.redirect('/');
         }
     );
+});
+
+// Rota protegida para administradores
+app.get('/admin', isAuthenticated, isAdmin, (req, res) => {
+    res.render('admin', { title: 'Área Administrativa' });
+});
+
+// Rota para exibir agendamentos para o admin
+app.get('/adm_agend', isAdmin, (req, res) => {
+    // Consultar todos os agendamentos com o nome do usuário
+    db.all(`
+        SELECT consultas.id, consultas.data_consulta, consultas.hora, users.username
+        FROM consultas
+        INNER JOIN users ON consultas.usuario_id = users.id
+    `, (err, rows) => {
+        if (err) {
+            console.error('Erro ao buscar agendamentos:', err);
+            return res.status(500).send('Erro ao buscar agendamentos');
+        }
+
+        // Renderizar a página com os dados dos agendamentos
+        res.render('adm-agend', { agendamentos: rows });
+    });
+});
+
+app.get('/delete-user-by-email', (req, res) => {
+    res.render('delete-user', { title: 'Área Administrativa' });
+});
+
+app.post('/delete-user-by-email', async (req, res) => {
+    const { email } = req.body; // Esperando que o e-mail do usuário seja enviado no corpo da requisição
+
+    if (!email) {
+        return res.status(400).send('E-mail do usuário é obrigatório.');
+    }
+
+    try {
+        // Deleta o usuário com o e-mail fornecido
+        await new Promise((resolve, reject) => {
+            db.run('DELETE FROM users WHERE email = ?', [email], function(err) {
+                if (err) return reject(err);
+                resolve();
+            });
+        });
+
+        res.send('Usuário deletado com sucesso.');
+    } catch (err) {
+        console.error('Erro ao deletar o usuário:', err);
+        res.status(500).send('Erro no servidor.');
+    }
 });
 
 app.listen(3000, () => {
