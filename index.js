@@ -4,7 +4,6 @@ const app = express();
 const exphbs = require('express-handlebars');
 const path = require('path');
 const bcrypt = require('bcryptjs');
-const moment = require('moment');
 const saltRounds = 10;
 const session = require('express-session'); // Importando o express-session
 const sqlite3 = require('sqlite3').verbose();
@@ -535,26 +534,25 @@ function formatarCPF(cpf) {
 
 app.get('/adm_pacientes', (req, res) => {
     db.all(`
-        SELECT id, username, cpf, data_nasc
-        FROM users
+        SELECT id, username, cpf, email, data_nasc
+        FROM users WHERE is_admin = 0
     `, (err, rows) => {
         if (err) {
             return res.status(500).send('Erro ao buscar dados do banco');
         }
 
         // Verifique os dados retornados do banco de dados
-        console.log(rows); // Isso vai mostrar todos os dados retornados
+        console.log('Dados recebidos do banco:', rows); 
 
-        // Manipulando os dados e calculando a idade
         const pacientes = rows.map(paciente => ({
-            nome: paciente.username, // Aqui estamos usando 'username' como nome
+            nome: paciente.username,
             id: paciente.id,
-            cpf: formatarCPF(paciente.cpf), // Formata o CPF
+            cpf: formatarCPF(paciente.cpf),
+            email: paciente.email || 'Email não encontrado',
             dataNascimento: paciente.data_nasc,
-            idade: calcularIdade(paciente.data_nasc) // Calculando a idade a partir da data de nascimento
+            idade: calcularIdade(paciente.data_nasc)
         }));        
 
-        // Renderizando a página com os dados
         res.render('pacientes', { pacientes });
     });
 });
