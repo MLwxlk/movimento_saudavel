@@ -10,11 +10,6 @@
 
 <body>
     <div class="container">
-        <header>
-            <img id="logo" src="images/Logo.png" alt="Logo_movimento_saudavel" onclick="voltar()">
-        </header>
-
-
         <section class="exercise-plan">
             <div class="plan-title">
                 <h1>Montagem de plano de exercícios</h1>
@@ -25,14 +20,22 @@
                 </p>
             </div>
 
-            <button class="create-button" onclick="criarLista()">Criar Nova Lista de Exercícios</button>
-            <button class="edit-button" onclick="editarLista()">Editar Lista de Exercícios</button>
+            <button class="create-button" id="create-button" onclick="criarLista()">Criar Nova Lista de Exercícios</button>
+            <button class="edit-button" id="edit-button" onclick="editarLista()">Editar Lista de Exercícios</button>
 
         </section>
 
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function criarLista() {
+            window.location.href = '/adm_exercicios2'
+        };
+
+        function editarLista() {
+            window.location.href = '/adm_exercicios2'
+        };
+    </script>
 </body>
 
 </html>

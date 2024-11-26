@@ -10,10 +10,6 @@
 
 <body>
   <div class="container">
-    <header>
-      <img id="logo" src="images/Logo.png" alt="Logo Movimento Saudável" onclick="voltar()">
-    </header>
-
     <section class="exercise-plan">
       <div class="plan-title">
         <h1>Montagem de plano de exercícios</h1>
@@ -55,11 +51,16 @@
         <div class="align-buttons">
           <button class="add-exercise">+</button>
           <!-- Botão de Salvar -->
-          <button class="save-button">Salvar</button>
+          <button class="save-button" onclick="voltar()">Salvar</button>
         </div>
       </div>
     </section>
   </div>
+  <script>
+    function voltar() {
+      window.location.href = '/adm_exercicios'
+    };
+  </script>
 </body>
 
 </html>

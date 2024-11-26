@@ -94,51 +94,49 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Middleware para definir o menu baseado no tipo de usuário
 app.use((req, res, next) => {
     if (req.session.user && req.session.user.is_admin) {
         res.locals.menu = [
             { icon: 'fa-solid fa-users-cog', text: 'Pacientes', link: '/adm_pacientes' },
-                { icon: 'fa-solid fa-chart-line', text: 'Exames', link: '/adm_exames' },
-                { icon: 'fa-solid fa-cogs', text: 'Exercicios', link: '/adm_exercicios' },
-                { icon: 'fa-solid fa-calendar-days', text: 'Agendamentos', link: '/adm_agend'}
-            ];
+            { icon: 'fa-solid fa-cogs', text: 'Exercicios', link: '/adm_exercicios' },
+            { icon: 'fa-solid fa-calendar-days', text: 'Agendamentos', link: '/adm_agend' }
+        ];
+        res.locals.userType = 'admin';  // Variável para verificar o tipo de usuário
     } else {
         res.locals.menu = [
             { icon: 'fa-solid fa-headset', text: 'Começar', link: '/comecar' },
             { icon: 'fa-solid fa-dumbbell', text: 'Exercícios', link: '/exercicio' },
             { icon: 'fa-solid fa-bars', text: 'Contato', link: '/contato' }
         ];
+        res.locals.userType = 'normal';  // Variável para verificar o tipo de usuário
     }
     next();
 });
 
 app.get('/', (req, res) => {
     if (req.session.user && req.session.user.is_admin) {
-        // Renderiza o menu para administradores
-        
         return res.render('index', {
             menu: [
                 { icon: 'fa-solid fa-users-cog', text: 'Pacientes', link: '/adm_pacientes' },
-                { icon: 'fa-solid fa-chart-line', text: 'Exames', link: '/adm_exames' },
                 { icon: 'fa-solid fa-cogs', text: 'Exercicios', link: '/adm_exercicios' },
-                { icon: 'fa-solid fa-calendar-days', text: 'Agendamentos', link: '/adm_agend'}
-            ]
+                { icon: 'fa-solid fa-calendar-days', text: 'Agendamentos', link: '/adm_agend' }
+            ],
+            userType: 'admin'  // Passando o tipo de usuário para o template
         });
     }
 
-    // Renderiza o menu para usuários normais
     res.render('index', {
         menu: [
             { icon: 'fa-solid fa-headset', text: 'Começar', link: '/comecar' },
             { icon: 'fa-solid fa-dumbbell', text: 'Exercícios', link: '/exercicio' },
             { icon: 'fa-solid fa-bars', text: 'Contato', link: '/contato' }
-        ]
+        ],
+        userType: 'normal'  // Passando o tipo de usuário para o template
     });
 });
 
 app.get('/exercicio', (req, res) => {
-    res.render('exercicio', { title: 'Exercicios'});
+    res.render('exercicio', { title: 'Exercicios', });
 });
 
 app.get('/exercicio-start', (req, res) => {
@@ -559,6 +557,14 @@ app.get('/adm_pacientes', (req, res) => {
         // Renderizando a página com os dados
         res.render('pacientes', { pacientes });
     });
+});
+
+app.get('/adm_exercicios', (req, res) => {
+    res.render('exercicio-adm', { title: 'Começar' });
+});
+
+app.get('/adm_exercicios2', (req, res) => {
+    res.render('exercicio2-adm', { title: 'Começar' });
 });
 
 app.listen(3000, () => {

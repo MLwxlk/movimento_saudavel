@@ -24,4 +24,16 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Erro ao verificar login:', error));
     }
+
+    // Garantir que o filtro de cor seja aplicado conforme o tipo de usuário
+    const userIcon = document.getElementById('user');
+    if (userIcon) {
+        if (userIcon.classList.contains('admin')) {
+            // Efeito vermelho para administradores
+            userIcon.style.filter = 'brightness(0) saturate(100%) invert(11%) sepia(76%) saturate(5960%) hue-rotate(358deg) brightness(89%) contrast(114%)';
+        } else if (userIcon.classList.contains('normal')) {
+            // Efeito azul para usuários normais
+            userIcon.style.filter = 'brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(4331%) hue-rotate(187deg) brightness(92%) contrast(101%)';
+        }
+    }
 });

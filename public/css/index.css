@@ -82,3 +82,15 @@ p {
     color: white;
     font-size: 15px;
 }
+
+/* Efeito para o ícone de perfil de usuário normal (azul) */
+.user-icon.normal {
+    filter: brightness(0) saturate(100%) invert(31%) sepia(88%) saturate(4331%) hue-rotate(187deg) brightness(92%) contrast(101%);
+    transition: filter 0.3s ease;
+}
+
+/* Efeito para o ícone de perfil de administrador (vermelho) */
+.user-icon.admin {
+    filter: brightness(0) saturate(100%) invert(11%) sepia(76%) saturate(5960%) hue-rotate(358deg) brightness(89%) contrast(114%);
+    transition: filter 0.3s ease;
+}
