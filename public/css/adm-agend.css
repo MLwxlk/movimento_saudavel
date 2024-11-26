@@ -23,6 +23,7 @@ body {
 .container {
     background-color: #c8e6c9;
     width: 500px;
+    height: 550px;
     padding: 30px;
     display: flex;
     flex-direction: column;
